@@ -1,0 +1,5 @@
+Use Vidsi;
+
+CREATE TABLE VS_SUSCRIBER(
+
+)
