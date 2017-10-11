@@ -10,8 +10,9 @@ CREATE TABLE VS_SUSCRIBER(
 	city   VARCHAR(50),
 	state   VARCHAR(50),
 
-)
+);
 
+go;
 
 CREATE TABLE VS_SUSCRIBER_PHONE (
 	id int NOT NULL PRIMARY KEY,
@@ -20,5 +21,14 @@ CREATE TABLE VS_SUSCRIBER_PHONE (
 	phone_type varchar(100),
 	phone_number varchar(20),
 	phone_extention varchar(5),
+	FOREIGN KEY(suscriber_id) REFERENCES VS_SUSCRIBER(id)
+);
+
+go;
+
+CREATE TABLE VS_SUSCRIBER_EMAILS (
+	id int NOT NULL PRIMARY KEY,
+	suscriber_id int,
+	email varchar(100),
 	FOREIGN KEY(suscriber_id) REFERENCES VS_SUSCRIBER(id)
 )
