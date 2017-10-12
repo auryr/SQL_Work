@@ -65,6 +65,7 @@ GO
 CREATE TABLE tvsCategories(
 	id int NOT NULL PRIMARY KEY,
 	description varchar(100),
+	expiration_days int,
 );
 
 CREATE TABLE tvsSubscribers(
@@ -231,6 +232,7 @@ CREATE TABLE tvsPayments(
 	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id),
 );
 
+
 go
 
 CREATE TABLE tvsPaymentsInvoices(
@@ -252,7 +254,13 @@ CREATE TABLE tvsPaymentsDetails(
 	FOREIGN KEY(subscriber_pay_card_id) REFERENCES tvsSubscribers_payCards(id)
 );
 
-
+CREATE TABLE tvsSucsribersCancellations(
+	id int NOT NULL PRIMARY KEY,
+	subcriber_id int NOT NULL,
+	sent_date date ,
+	release_date date, 
+	FOREIGN KEY(subcriber_id) REFERENCES tvsSubscribers(id),
+)
 
 
 
