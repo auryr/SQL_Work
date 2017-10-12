@@ -1,63 +1,125 @@
+USE MASTER;
+GO
+
+if  ( SELECT count(name) FROM sys.databases WHERE name='Vidsi')>0 DROP DATABASE Vidsi;
+
+CREATE DATABASE Vidsi;
+GO
 Use Vidsi;
 
-CREATE TABLE VS_CATEGORIES(
+
+
+IF OBJECT_ID('dbo.tvsCategories', 'U') IS NOT NULL 
+	DROP TABLE tvsCategories
+IF OBJECT_ID('dbo.tvsSubscribers', 'U') IS NOT NULL 
+	DROP TABLE tvsSubscribers;
+
+IF OBJECT_ID('dbo.tvsSubscribers_phone', 'U') IS NOT NULL 
+	DROP TABLE tvsSubscribers_phone;
+
+IF OBJECT_ID('dbo.tvsSubscribers_emails', 'U') IS NOT NULL 
+	DROP TABLE tvsSubscribers_emails;
+
+IF OBJECT_ID('dbo.tvsSubscribers_payCards', 'U') IS NOT NULL
+	DROP TABLE tvsSubscribers_payCards;
+
+IF OBJECT_ID('dbo.tvsPlanTiers', 'U') IS NOT NULL 
+	DROP TABLE tvsPlanTiers;
+
+IF OBJECT_ID('dbo.tvsPlanDetails', 'U') IS NOT NULL 
+	DROP TABLE tvsPlanDetails;
+
+IF OBJECT_ID('dbo.tvsSubscribersPlans', 'U') IS NOT NULL 
+	DROP TABLE tvsSubscribersPlans;
+
+IF OBJECT_ID('dbo.tvsContentProviders', 'U') IS NOT NULL 
+	DROP TABLE tvsContentProviders;
+
+IF OBJECT_ID('dbo.tvsGenre', 'U') IS NOT NULL 
+	DROP TABLE tvsGenre;
+
+IF OBJECT_ID('dbo.tvsAuthors', 'U') IS NOT NULL 
+	DROP TABLE tvsAuthors;
+
+IF OBJECT_ID('dbo.tvsVideos', 'U') IS NOT NULL 
+	DROP TABLE tvsVideos;
+
+IF OBJECT_ID('dbo.tvsSubscribersStreaming', 'U') IS NOT NULL 
+	DROP TABLE tvsSubscribersStreaming;
+
+IF OBJECT_ID('dbo.tvsInvoices', 'U') IS NOT NULL 
+	DROP TABLE tvsInvoices;
+
+IF OBJECT_ID('dbo.tvsPayments', 'U') IS NOT NULL 
+	DROP TABLE tvsPayments;
+
+IF OBJECT_ID('dbo.tvsPaymentsInvoices', 'U') IS NOT NULL 
+	DROP TABLE tvsPaymentsInvoices;
+
+IF OBJECT_ID('dbo.tvsPaymentsDetails', 'U') IS NOT NULL 
+DROP TABLE tvsPaymentsDetails;
+
+GO
+
+
+CREATE TABLE tvsCategories(
 	id int NOT NULL PRIMARY KEY,
 	description varchar(100),
 );
 
-CREATE TABLE VS_SUBSCRIBERS(
+CREATE TABLE tvsSubscribers(
 	id  int NOT NULL PRIMARY KEY,
-	firstname VARCHAR(100),
-	middlename VARCHAR(100),
-	lastname VARCHAR(100),
-	country VARCHAR(100),
-	address VARCHAR(255),
+	firstname VARCHAR(100) NOT NULL,
+	middlename VARCHAR(100) NULL,
+	lastname VARCHAR(100) NOT NULL,
+	country VARCHAR(100)  NOT NULL,
+	address VARCHAR(255)  ,
 	city   VARCHAR(50),
 	state   VARCHAR(50),
-	initial_date date ,
-	free_plan_end date,
-	status VARCHAR(1),
-	category_id int,
-	FOREIGN KEY(category_id) REFERENCES VS_CATEGORIES(id)
+	initial_date datetime  NOT NULL,
+	free_plan_end datetime ,
+	status VARCHAR(1)  NOT NULL,
+	category_id int  NOT NULL,
+	FOREIGN KEY(category_id) REFERENCES tvsCategories(id)
 );
 
 go
 
-CREATE TABLE VS_SUBSCRIBERS_PHONE (
+CREATE TABLE tvsSubscribers_phone (
 	id int NOT NULL PRIMARY KEY,
-	subscriber_id int,
-	country_code varchar(2),
-	phone_type varchar(100),
-	phone_number varchar(20),
+	subscriber_id int  NOT NULL,
+	country_code varchar(2) ,
+	phone_type varchar(100)  NOT NULL,
+	phone_number varchar(20)  NOT NULL,
 	phone_extention varchar(5),
 	note text,
-	status VARCHAR(1),
-	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id)
+	status VARCHAR(1)  NOT NULL,
+	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id)
 );
 
 go
 
-CREATE TABLE VS_SUBSCRIBERS_EMAILS (
+CREATE TABLE tvsSubscribers_emails (
 	id int NOT NULL PRIMARY KEY,
 	subscriber_id int,
 	email varchar(100),
 	status VARCHAR(1),
-	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id)
+	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id)
 );
 
-CREATE TABLE VS_SUBSCRIBERS_PAY_CARDS (
+CREATE TABLE tvsSubscribers_payCards (
 	id int NOT NULL PRIMARY KEY,
 	subscriber_id int,
 	type varchar(100),
 	number varchar (20),
 	expiration_date date,
 	sec_number int, 
-	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id)
+	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id)
 );
 
 go
 
-CREATE TABLE VS_PLAN_TIERS (
+CREATE TABLE tvsPlanTiers (
 	id int NOT NULL PRIMARY KEY,
 	description varchar(100),
 	cost decimal(10,2),
@@ -66,16 +128,16 @@ CREATE TABLE VS_PLAN_TIERS (
 	status varchar(1),
 );
 
-CREATE TABLE VS_PLAN_DETAILS (
+CREATE TABLE tvsPlanDetails (
 	id int NOT NULL PRIMARY KEY,
 	plan_tier_id int,
 	detail varchar(100),
-	FOREIGN KEY(plan_tier_id) REFERENCES VS_PLAN_TIERS(id)
+	FOREIGN KEY(plan_tier_id) REFERENCES tvsPlanTiers(id)
 );
 
 go
 
-CREATE TABLE VS_SUBSCRIBER_PLANS (
+CREATE TABLE tvsSubscribersPlans (
 	id int NOT NULL PRIMARY KEY,
 	subscriber_id int,
 	plan_tier_id int,
@@ -86,15 +148,14 @@ CREATE TABLE VS_SUBSCRIBER_PLANS (
 	payment_method varchar(10),
 	auto_pay bit ,
 	subscriber_pay_card_id int,
-	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id),
-	FOREIGN KEY(plan_tier_id)  REFERENCES VS_PLAN_TIERS(id),
-	FOREIGN KEY(subscriber_pay_card_id)   REFERENCES VS_SUBSCRIBERS_PAY_CARDS(id)
+	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id),
+	FOREIGN KEY(plan_tier_id)  REFERENCES tvsPlanTiers(id),
+	FOREIGN KEY(subscriber_pay_card_id)   REFERENCES tvsSubscribers_payCards(id)
 );
 
 go
 
-
-CREATE TABLE VS_CONTENT_PROVIDERS(
+CREATE TABLE tvsContentProviders(
 	id int NOT NULL PRIMARY KEY,
 	name varchar(100),
 	registration_brand varchar(100),
@@ -104,19 +165,19 @@ CREATE TABLE VS_CONTENT_PROVIDERS(
 
 go
 
-CREATE TABLE VS_GENRES(
+CREATE TABLE tvsGenre(
 	id int NOT NULL PRIMARY KEY,
 	description varchar(100),
 );
 
-CREATE TABLE VS_AUTHORS(
+CREATE TABLE tvsAuthors(
 	id int NOT NULL PRIMARY KEY,
 	name varchar(100)
 );
 
 go
 
-CREATE TABLE VS_VIDEOS(
+CREATE TABLE tvsVideos(
 	id int NOT NULL PRIMARY KEY,
 	title varchar(100),
 	description text,
@@ -127,25 +188,25 @@ CREATE TABLE VS_VIDEOS(
 	content_provider_id int,
 	author_id int,
 	release_date date,
-	FOREIGN KEY(genre_id)				REFERENCES VS_GENRES(id),
-	FOREIGN KEY(content_provider_id)	REFERENCES VS_CONTENT_PROVIDERS(id),
-	FOREIGN KEY(author_id)				REFERENCES VS_AUTHORS(id),
+	FOREIGN KEY(genre_id)				REFERENCES tvsGenre(id),
+	FOREIGN KEY(content_provider_id)	REFERENCES tvsContentProviders(id),
+	FOREIGN KEY(author_id)				REFERENCES tvsAuthors(id),
 );
 
 go
 
-CREATE TABLE SUBSCRIBERS_VIDEOS(
+CREATE TABLE tvsSubscribersStreaming(
 	id int NOT NULL PRIMARY KEY,
 	subscriber_id int,
 	video_id int,
-	viewed_date date,
-	FOREIGN KEY(subscriber_id)	REFERENCES VS_SUBSCRIBERS(id),
-	FOREIGN KEY(video_id)		REFERENCES VS_VIDEOS(id),
+	streaming_date date,
+	FOREIGN KEY(subscriber_id)	REFERENCES tvsSubscribers(id),
+	FOREIGN KEY(video_id)		REFERENCES tvsVideos(id),
 );
 
 go
  
-CREATE TABLE INVOICES(
+CREATE TABLE tvsInvoices(
 	id int NOT NULL PRIMARY KEY,
 	ref_number varchar(12),
 	date_issued date,
@@ -154,12 +215,12 @@ CREATE TABLE INVOICES(
 	expiration_date date,
 	status varchar(1),
 	subscriber_plan_id int,
-	FOREIGN KEY(subscriber_plan_id) REFERENCES VS_SUBSCRIBER_PLANS(id) 
+	FOREIGN KEY(subscriber_plan_id) REFERENCES tvsSubscribersPlans(id) 
 );
 
 go
 
-CREATE TABLE PAYMENTS(
+CREATE TABLE tvsPayments(
 	id int NOT NULL PRIMARY KEY,
 	ref_number varchar(12),
 	date_issued date,
@@ -167,28 +228,28 @@ CREATE TABLE PAYMENTS(
 	amount decimal (10,2),
 	status varchar(1),
 	subscriber_id int,
-	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id),
+	FOREIGN KEY(subscriber_id) REFERENCES tvsSubscribers(id),
 );
 
 go
 
-CREATE TABLE PAYMENT_INVOICE(
+CREATE TABLE tvsPaymentsInvoices(
 	id int NOT NULL PRIMARY KEY,
 	payment_id int,
 	invoice_id int,
 	amount decimal(10,2),
-	FOREIGN KEY(payment_id) REFERENCES PAYMENTS(id) ,
-	FOREIGN KEY(invoice_id) REFERENCES INVOICES(id) ,
+	FOREIGN KEY(payment_id) REFERENCES tvsPayments(id) ,
+	FOREIGN KEY(invoice_id) REFERENCES tvsInvoices(id) ,
 );
 
-CREATE TABLE PAYMENT_DETAILS(
+CREATE TABLE tvsPaymentsDetails(
 	id int NOT NULL PRIMARY KEY,
 	amount decimal(10,2),
 	document_no varchar(15) null,
 	payment_id int null,
 	subscriber_pay_card_id int null ,
-	FOREIGN KEY(payment_id) REFERENCES PAYMENTS(id) ,
-	FOREIGN KEY(subscriber_pay_card_id) REFERENCES VS_SUBSCRIBERS_PAY_CARDS(id)
+	FOREIGN KEY(payment_id) REFERENCES tvsPayments(id) ,
+	FOREIGN KEY(subscriber_pay_card_id) REFERENCES tvsSubscribers_payCards(id)
 );
 
 
