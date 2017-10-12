@@ -1,6 +1,5 @@
 Use Vidsi;
 
-
 CREATE TABLE VS_CATEGORIES(
 	id int NOT NULL PRIMARY KEY,
 	description varchar(100),
@@ -22,7 +21,7 @@ CREATE TABLE VS_SUBSCRIBERS(
 	FOREIGN KEY(category_id) REFERENCES VS_CATEGORIES(id)
 );
 
-go;
+go
 
 CREATE TABLE VS_SUBSCRIBERS_PHONE (
 	id int NOT NULL PRIMARY KEY,
@@ -36,7 +35,7 @@ CREATE TABLE VS_SUBSCRIBERS_PHONE (
 	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id)
 );
 
-go;
+go
 
 CREATE TABLE VS_SUBSCRIBERS_EMAILS (
 	id int NOT NULL PRIMARY KEY,
@@ -56,7 +55,7 @@ CREATE TABLE VS_SUBSCRIBERS_PAY_CARDS (
 	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id)
 );
 
-go;
+go
 
 CREATE TABLE VS_PLAN_TIERS (
 	id int NOT NULL PRIMARY KEY,
@@ -74,13 +73,13 @@ CREATE TABLE VS_PLAN_DETAILS (
 	FOREIGN KEY(plan_tier_id) REFERENCES VS_PLAN_TIERS(id)
 );
 
-go;
+go
 
 CREATE TABLE VS_SUBSCRIBER_PLANS (
 	id int NOT NULL PRIMARY KEY,
 	subscriber_id int,
 	plan_tier_id int,
-	contract_no varchar(100),
+	subscription_no varchar(100),
 	initial_date date,
 	expiration_date date,
 	status varchar(1),
@@ -92,18 +91,18 @@ CREATE TABLE VS_SUBSCRIBER_PLANS (
 	FOREIGN KEY(subscriber_pay_card_id)   REFERENCES VS_SUBSCRIBERS_PAY_CARDS(id)
 );
 
-go;
+go
 
 
 CREATE TABLE VS_CONTENT_PROVIDERS(
 	id int NOT NULL PRIMARY KEY,
 	name varchar(100),
 	registration_brand varchar(100),
-	registration_number varchar(120),
+	provider_number varchar(120),
 	copyright_details text
 );
 
-go;
+go
 
 CREATE TABLE VS_GENRES(
 	id int NOT NULL PRIMARY KEY,
@@ -115,7 +114,7 @@ CREATE TABLE VS_AUTHORS(
 	name varchar(100)
 );
 
-go;
+go
 
 CREATE TABLE VS_VIDEOS(
 	id int NOT NULL PRIMARY KEY,
@@ -127,12 +126,13 @@ CREATE TABLE VS_VIDEOS(
 	genre_id int,
 	content_provider_id int,
 	author_id int,
-	FOREIGN KEY(genre_id)			REFERENCES VS_GENRES(id),
+	release_date date,
+	FOREIGN KEY(genre_id)				REFERENCES VS_GENRES(id),
 	FOREIGN KEY(content_provider_id)	REFERENCES VS_CONTENT_PROVIDERS(id),
 	FOREIGN KEY(author_id)				REFERENCES VS_AUTHORS(id),
 );
 
-go;
+go
 
 CREATE TABLE SUBSCRIBERS_VIDEOS(
 	id int NOT NULL PRIMARY KEY,
@@ -143,7 +143,7 @@ CREATE TABLE SUBSCRIBERS_VIDEOS(
 	FOREIGN KEY(video_id)		REFERENCES VS_VIDEOS(id),
 );
 
-go;
+go
  
 CREATE TABLE INVOICES(
 	id int NOT NULL PRIMARY KEY,
@@ -157,7 +157,7 @@ CREATE TABLE INVOICES(
 	FOREIGN KEY(subscriber_plan_id) REFERENCES VS_SUBSCRIBER_PLANS(id) 
 );
 
-go;
+go
 
 CREATE TABLE PAYMENTS(
 	id int NOT NULL PRIMARY KEY,
@@ -170,7 +170,7 @@ CREATE TABLE PAYMENTS(
 	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBERS(id),
 );
 
-go;
+go
 
 CREATE TABLE PAYMENT_INVOICE(
 	id int NOT NULL PRIMARY KEY,
