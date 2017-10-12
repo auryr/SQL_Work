@@ -63,6 +63,45 @@ CREATE TABLE VS_PLAN_DETAIL (
 
 go;
 
+CREATE TABLE VS_SUBSRIBER_PLAN (
+	id int NOT NULL PRIMARY KEY,
+	subscriber_id int,
+	plan_tier_id int,
+	contract_no varchar(100),
+	initial_date date,
+	expiration_date date,
+	payment_method varchar(10),
+	auto_pay bit ,
+	subscriber_pay_card_id int,
+	FOREIGN KEY(subscriber_id) REFERENCES VS_SUBSCRIBER(id),
+	FOREIGN KEY(plan_tier_id)  REFERENCES VS_PLAN_TIER(id),
+	FOREIGN KEY(subscriber_pay_card_id)   REFERENCES VS_SUBSCRIBER_PAY_CARDS(id)
+);
+
+go;
+
+
+CREATE TABLE CONTENT_PROVIDER(
+	id int,
+	name varchar(100),
+	registration_brand varchar(100),
+	registration_number varchar(120),
+	copyright_details text
+);
+
+CREATE TABLE CATEGORIES(
+	id int,
+	description varchar(100);
+
+);
+
+CREATE TABLE VIDEO(
+	id int,
+	title varchar(100),
+	description text,
+	duration decimal(5,2),
+
+);
 
 
 
