@@ -1,0 +1,103 @@
+sqlserver	Vidsi	dbo	tvsSucsribersCancellations	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSucsribersCancellations	subcriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSucsribersCancellations	sent_date	3	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSucsribersCancellations	release_date	4	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPaymentsDetails	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPaymentsDetails	amount	2	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPaymentsDetails	document_no	3	varchar	15	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPaymentsDetails	payment_id	4	int	NULL	FOREIGN KEY	dbo	tvsPayments	id
+sqlserver	Vidsi	dbo	tvsPaymentsDetails	subscriber_pay_card_id	5	int	NULL	FOREIGN KEY	dbo	tvsSubscribers_payCards	id
+sqlserver	Vidsi	dbo	tvsPaymentsInvoices	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPaymentsInvoices	payment_id	2	int	NULL	FOREIGN KEY	dbo	tvsPayments	id
+sqlserver	Vidsi	dbo	tvsPaymentsInvoices	invoice_id	3	int	NULL	FOREIGN KEY	dbo	tvsInvoices	id
+sqlserver	Vidsi	dbo	tvsPaymentsInvoices	amount	4	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	ref_number	2	varchar	12	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	date_issued	3	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	description	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	amount	5	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	status	6	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPayments	subscriber_id	7	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsInvoices	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	ref_number	2	varchar	12	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	date_issued	3	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	description	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	amount	5	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	expiration_date	6	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	status	7	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsInvoices	subscriber_plan_id	8	int	NULL	FOREIGN KEY	dbo	tvsSubscribersPlans	id
+sqlserver	Vidsi	dbo	tvsSubscribersStreaming	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersStreaming	subscriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSubscribersStreaming	video_id	3	int	NULL	FOREIGN KEY	dbo	tvsVideos	id
+sqlserver	Vidsi	dbo	tvsSubscribersStreaming	streaming_date	4	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	title	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	description	3	text	2147483647	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	license_number	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	duration	5	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	view_limit	6	int	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsVideos	genre_id	7	int	NULL	FOREIGN KEY	dbo	tvsGenre	id
+sqlserver	Vidsi	dbo	tvsVideos	content_provider_id	8	int	NULL	FOREIGN KEY	dbo	tvsContentProviders	id
+sqlserver	Vidsi	dbo	tvsVideos	author_id	9	int	NULL	FOREIGN KEY	dbo	tvsAuthors	id
+sqlserver	Vidsi	dbo	tvsVideos	release_date	10	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsAuthors	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsAuthors	name	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsGenre	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsGenre	description	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsContentProviders	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsContentProviders	name	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsContentProviders	registration_brand	3	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsContentProviders	provider_number	4	varchar	120	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsContentProviders	copyright_details	5	text	2147483647	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	subscriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	plan_tier_id	3	int	NULL	FOREIGN KEY	dbo	tvsPlanTiers	id
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	subscription_no	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	initial_date	5	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	expiration_date	6	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	status	7	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	payment_method	8	varchar	10	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	auto_pay	9	bit	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribersPlans	subscriber_pay_card_id	10	int	NULL	FOREIGN KEY	dbo	tvsSubscribers_payCards	id
+sqlserver	Vidsi	dbo	tvsPlanDetails	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanDetails	plan_tier_id	2	int	NULL	FOREIGN KEY	dbo	tvsPlanTiers	id
+sqlserver	Vidsi	dbo	tvsPlanDetails	detail	3	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	description	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	cost	3	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	streaming_limit	4	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	extra_streaming_charge	5	decimal	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsPlanTiers	status	6	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	subscriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	type	3	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	number	4	varchar	20	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	expiration_date	5	date	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_payCards	sec_number	6	int	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_emails	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_emails	subscriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSubscribers_emails	email	3	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_emails	status	4	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	subscriber_id	2	int	NULL	FOREIGN KEY	dbo	tvsSubscribers	id
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	country_code	3	varchar	2	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	phone_type	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	phone_number	5	varchar	20	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	phone_extention	6	varchar	5	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	note	7	text	2147483647	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers_phone	status	8	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	firstname	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	middlename	3	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	lastname	4	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	country	5	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	address	6	varchar	255	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	city	7	varchar	50	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	state	8	varchar	50	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	initial_date	9	datetime	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	free_plan_end	10	datetime	NULL	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	status	11	varchar	1	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsSubscribers	category_id	12	int	NULL	FOREIGN KEY	dbo	tvsCategories	id
+sqlserver	Vidsi	dbo	tvsCategories	id	1	int	NULL	PRIMARY KEY	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsCategories	description	2	varchar	100	NULL	NULL	NULL	NULL
+sqlserver	Vidsi	dbo	tvsCategories	expiration_days	3	int	NULL	NULL	NULL	NULL	NULL
