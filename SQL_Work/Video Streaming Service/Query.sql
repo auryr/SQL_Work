@@ -1,4 +1,5 @@
-use Vidsi; 
+use Vidsi;
+ 
 DECLARE @stream_date_i date = '2017-01-01';
 DECLARE @stream_date_f date = '2017-01-31';
 DECLARE @rank_limit int=20;
